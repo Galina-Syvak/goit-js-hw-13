@@ -2,6 +2,8 @@ import './sass/main.scss';
 import { Notify } from 'notiflix';
 import photoCardTemplate from './templates/card-template.hbs';
 import { fetchImages } from './js/fetchImages';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const refs = {
   searchFormEl: document.querySelector('#search-form'),
@@ -14,6 +16,7 @@ refs.searchFormEl.addEventListener('submit', onSubmit);
 refs.loadMoreEl.addEventListener('click', onButtonClick);
 
 let page = 1;
+const lightbox = new SimpleLightbox('.gallery a');
 
 function onSubmit(event) {
   event.preventDefault();
@@ -30,6 +33,8 @@ function onSubmit(event) {
       Notify.success(`Hooray! We found ${value.totalHits} images.`);
       refs.loadMoreEl.classList.remove('hidden');
       refs.galleryEl.innerHTML = photoCardTemplate(value);
+
+      lightbox.refresh();
     })
     .catch(error => {
       console.error(error);
