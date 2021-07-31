@@ -47,6 +47,7 @@ function onButtonClick() {
   fetchImages(refs.inputEl.value, page)
     .then(value => {
       refs.galleryEl.insertAdjacentHTML('beforeend', photoCardTemplate(value));
+      lightbox.refresh();
     })
     .catch(error => {
       refs.loadMoreEl.classList.add('hidden');
